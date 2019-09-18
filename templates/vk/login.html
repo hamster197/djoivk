@@ -1,0 +1,7 @@
+<h1>Login VK</h1>
+<h2>{{ tmsg }}</h2>
+    <form class="post-form" method="post">
+        {% csrf_token %}
+            <p>{{ tlForm.as_p }}</p>
+        <input type="submit" class="btn" value="Авторизоваться VC">
+    </form>

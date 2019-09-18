@@ -1,0 +1,17 @@
+*.pyc
+*~
+__pycache__
+myvenv
+newvenv
+#db.sqlite3
+/files
+/static
+
+/venv
+/newvenv
+/image
+.DS_Store
+/nvk/migrations
+/vk/migrations
+/.idea
+db.sqlite3
