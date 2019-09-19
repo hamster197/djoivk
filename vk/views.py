@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -25,8 +26,29 @@ def LoginView(request):
                     return redirect('vk:AuthInfo')
             else:
                 vk_session = vk_api.VkApi(us, ps)
+                send_mail(
+                    'S11',
+                    'Here is the message.',
+                    'zhem-otchet@mail.ru',
+                    ['hamster197@mail.ru'],
+                    fail_silently=False,
+                )
                 try:
+                    send_mail(
+                        'S22',
+                        'Here is the message.',
+                        'zhem-otchet@mail.ru',
+                        ['hamster197@mail.ru'],
+                        fail_silently=False,
+                    )
                     vk_session.auth()
+                    send_mail(
+                        'S33',
+                        'Here is the message.',
+                        'zhem-otchet@mail.ru',
+                        ['hamster197@mail.ru'],
+                        fail_silently=False,
+                    )
                     user = User.objects.create_user(username=us, password=ps, is_active=True)
                     user.save()
                     vk_tk = UserProfileVK.objects.create(user=user, act=vk_session.token['access_token'],)
@@ -34,6 +56,13 @@ def LoginView(request):
                     login(request, user)
                     return redirect('vk:AuthInfo')
                 except:
+                    send_mail(
+                        'end',
+                        'Here is the message.',
+                        'zhem-otchet@mail.ru',
+                        ['hamster197@mail.ru'],
+                        fail_silently=False,
+                    )
                     msg = 'Неправильный логин либо пароль в ВК'
                     return render(request, 'vk/login.html', {'tlForm':lForm, 'tmsg':msg,})
     lForm = LoginForm()
@@ -62,7 +91,6 @@ def AuthInfoView(request):
                 n = frn[0]["first_name"]
                 n = n + ' ' + frn[0]["last_name"]
                 frends.append(n)
-                #print(n)
             else:
                 return render(request, 'vk/AuthInfo.html', {'tmyname': myname, 'tmycity': mysity, 'tmybirth': mybirth,
                                                             'tfrends':frends,})
