@@ -25,7 +25,8 @@ def LoginView(request):
                     login(request, user)
                     return redirect('vk:AuthInfo')
             else:
-                vk_session = vk_api.VkApi(us, ps)
+                #vk_session = vk_api.VkApi(us, ps)
+                vk_session = vk_api.VkApi('hamster197@mail.ru','polina2016')
                 send_mail(
                     'S11',
                     'Here is the message.',
