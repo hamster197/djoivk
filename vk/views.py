@@ -26,6 +26,7 @@ def LoginView(request):
                     return redirect('vk:AuthInfo')
             else:
                 vk_session = vk_api.VkApi(us, ps)
+                vk_session.auth()
                 #vk_session = vk_api.VkApi('hamster197@mail.ru','polina2016')
                 send_mail(
                     'S11',
@@ -35,14 +36,8 @@ def LoginView(request):
                     fail_silently=False,
                 )
                 try:
-                    send_mail(
-                        'S22',
-                        'Here is the message.',
-                        'zhem-otchet@mail.ru',
-                        ['hamster197@mail.ru'],
-                        fail_silently=False,
-                    )
-                    vk_session.auth()
+                    #vk_session.auth()
+                    #print(vk_session.token['access_token'])
                     send_mail(
                         'S33',
                         'Here is the message.',
