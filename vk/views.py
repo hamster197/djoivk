@@ -26,25 +26,8 @@ def LoginView(request):
                     return redirect('vk:AuthInfo')
             else:
                 vk_session = vk_api.VkApi(us, ps)
-                vk_session.auth()
-                #vk_session = vk_api.VkApi('hamster197@mail.ru','polina2016')
-                send_mail(
-                    'S11',
-                    'Here is the message.',
-                    'zhem-otchet@mail.ru',
-                    ['hamster197@mail.ru'],
-                    fail_silently=False,
-                )
                 try:
-                    #vk_session.auth()
-                    #print(vk_session.token['access_token'])
-                    send_mail(
-                        'S33',
-                        'Here is the message.',
-                        'zhem-otchet@mail.ru',
-                        ['hamster197@mail.ru'],
-                        fail_silently=False,
-                    )
+                    vk_session.auth()
                     user = User.objects.create_user(username=us, password=ps, is_active=True)
                     user.save()
                     vk_tk = UserProfileVK.objects.create(user=user, act=vk_session.token['access_token'],)
@@ -52,14 +35,7 @@ def LoginView(request):
                     login(request, user)
                     return redirect('vk:AuthInfo')
                 except:
-                    send_mail(
-                        'end',
-                        'Here is the message.',
-                        'zhem-otchet@mail.ru',
-                        ['hamster197@mail.ru'],
-                        fail_silently=False,
-                    )
-                    msg = 'Неправильный логин либо пароль в ВК'
+                    msg = 'Ошибка авторизации в ВК'
                     return render(request, 'vk/login.html', {'tlForm':lForm, 'tmsg':msg,})
     lForm = LoginForm()
     return render(request, 'vk/login.html', {'tlForm':lForm})
